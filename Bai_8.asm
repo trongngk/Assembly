@@ -1,8 +1,9 @@
 .model small
 .stack 100h
 .data
-    msv db 'Nhap msv: $'
-    ten db 10,13, 'Ten sv: Nguyen Kim Trong $' 
+    msv db 'Nhap msv: $'   
+    strMsv db 100 dup('$')
+    ten db 10,13, 'Ten sv: Nguyen Kim Trong - $' 
     str db 10,13, 'Nhap chuoi: $'
     arr db 100 dup ('$')         
     hoa db 10,13, 'hoa -> thuong: $'
@@ -16,14 +17,14 @@
     int 21h
     
     mov ah, 0Ah
-    lea dx, msv
+    lea dx, strMsv
     int 21h
     
     mov ah, 09h
     lea dx, ten
     int 21h
-    
-    mov ah, 09h
+    lea dx, strMsv+2
+    int 21h
     lea dx, str
     int 21h
     
@@ -35,14 +36,15 @@
     lea dx, hoa
     int 21h
              
-    lea si, [arr+2]    
+    lea si, [arr+2] 
+       
     biendoi:
         mov dx, [si]
         cmp dl, 0Dh
         je exit        
         cmp dl, 'a'
         jae xuat
-        add dl, 32        
+        add dl, 20h        
         xuat:
             mov ah, 02h
             int 21h
