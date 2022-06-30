@@ -1,0 +1,70 @@
+.model small
+.stack 100h
+.data
+    filename db 'Nhap ten file: $'
+    file dw 100 dup(?),0 
+    content db 10,13, 'Nhap noi dung: $'
+    str db 100 dup(0) 
+    thefile dw ?       
+    
+.code
+    mov ax, data
+    mov ds, ax
+    
+    mov ah, 09h
+    lea dx, filename
+    int 21h
+    
+   
+    
+    mov si, 0
+    nhaptenfile:
+        mov ah, 01h
+        int 21h
+        cmp al, 0Dh
+        je nhapnoidung
+        mov ah, 0
+        mov file[si], ax
+        inc si
+        jmp nhaptenfile  
+         
+    nhapnoidung:
+        mov ah, 09h
+        lea dx, content
+        int 21h
+        mov si,0
+        mov cx, 100
+        nhap:
+            mov ah, 01h
+            int 21h
+            cmp al, 0Dh
+            je taofile 
+            mov str[si], al
+            inc si
+            jmp nhap
+            
+    taofile:
+        mov ah, 3ch
+        lea dx, file
+        mov cx, 0
+        int 21h
+        mov cx, si
+        mov thefile, ax
+        mov ah, 40h ; ghi file
+        mov bx, thefile
+        ghifile:
+            mov dh, 0
+            mov dl, str[si]
+            ;inc si
+            int 21h
+            loop ghifile
+        
+        mov ah, 3eh
+        mov bx, thefile
+        int 21h    
+     
+
+    mov ah, 4Ch
+    int 21h
+    
+    
