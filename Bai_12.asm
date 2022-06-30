@@ -1,22 +1,37 @@
 .model small
 .stack 100h
-.data
-    filename db 'Nhap ten file: $'
-    file dw 100 dup(?),0 
-    content db 10,13, 'Nhap noi dung: $'
+.data 
     str db 100 dup(0) 
-    thefile dw ?       
+    filename db 10,13, 'Nhap ten file: $'
+    file dw 100 dup(?),0 
+    content db 10,13, 'Nhap noi dung: $'    
+    thefile dw ?
+    msv db 'Nhap msv: $'
+    strMsv db 100 dup('$')
+    ten db 10,13, 'Ten sv: Nguyen Kim Trong - $'       
     
 .code
     mov ax, data
-    mov ds, ax
+    mov ds, ax 
+    
+    mov ah, 09h
+    lea dx, msv
+    int 21h
+    
+    mov ah, 0Ah
+    lea dx, strMsv
+    int 21h
+    
+    mov ah, 09h
+    lea dx, ten
+    int 21h
+    lea dx, strMsv+2
+    int 21h
     
     mov ah, 09h
     lea dx, filename
     int 21h
-    
-   
-    
+           
     mov si, 0
     nhaptenfile:
         mov ah, 01h
@@ -63,7 +78,6 @@
         mov bx, thefile
         int 21h    
      
-
     mov ah, 4Ch
     int 21h
     
@@ -73,4 +87,5 @@
 ;3eh: dong file
 ;40h: ghi file
 ;41h: xoa file
-;56h: rename    
+;56h: rename        
+    
