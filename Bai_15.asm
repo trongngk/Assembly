@@ -34,3 +34,11 @@
     int 21h
     
     
+;3ch: tao file
+;3dh: mo file da co
+;3fh: doc file
+;3eh: dong file
+;40h: ghi file
+;41h: xoa file
+;56h: rename    
+    
