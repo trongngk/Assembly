@@ -43,7 +43,7 @@
         cmp dl, '-'
         je demsoam
         cmp dl, ','
-        je demsoduong 
+        je demso
         inc si
         jmp nhapchuoi 
         
@@ -52,7 +52,7 @@
         inc si
         jmp nhapchuoi
         
-    demsoduong:
+    demso:
         inc cx
         inc si
         jmp nhapchuoi
