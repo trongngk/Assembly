@@ -9,7 +9,6 @@
     kq db 10,13, 'So luong snt: $'
     dem dw 0   
     num dw 0
-    cnt dw 0
 .code
     mov ax, data
     mov ds, ax
@@ -62,9 +61,11 @@
     tinhsnt:
         mov num, ax
         calc:  
-            mov ax, num             
+            mov ax, num 
+            cmp ax, 2
+            jb next            
             cmp cx, ax
-            jae endnum          ; ktra tu 2-> n: neu xuat hien nghiem != n : k phai snt
+            je endnum          ; ktra tu 2-> n: neu xuat hien nghiem != n : k phai snt
             mov dx, 0               
             div cx
             cmp dx, 0
@@ -72,19 +73,14 @@
             inc cx
             jmp calc        
             
-        endnum:    
-            mov dx, 0
-            div cx
-            cmp dx, 0
-            jne next 
+        endnum:
             inc dem   
             
         next:
             inc si
             mov cx, 2
             mov ax, 0
-            jmp xulychuoi
-            
+            jmp xulychuoi              
             
     print:   
         mov cx, 0 
@@ -101,8 +97,7 @@
             pop dx
             mov ah, 02h
             int 21h
-            loop popdx   
-    
+            loop popdx      
     
     mov ah, 04Ch
     int 21h    
