@@ -33,14 +33,17 @@
     lea dx, str
     int 21h
     
-    mov cx, 0
+    
     lea si, [str+2]
-    mov cl, [str+1]
     mov ax, 0
-    mov bx, 0
+    mov bx, 0 ; bien dem
    
     nhapchuoi:
-        mov dx, [si]       
+        mov dx, [si] 
+        cmp dl, '$'
+        je exit
+        cmp dl, 0Dh
+        je calc      
         cmp dl, ','
         je calc
         mul so10
@@ -49,24 +52,19 @@
         sub dl, 30h
         add ax, dx
         inc si
-        loop nhapchuoi 
+        jmp nhapchuoi 
            
     calc:        
         mov dx, 0
         div so5
         cmp dl, 0
-        je find  
-        jmp cont 
-                     
-    find:
-        inc bx  
+        jne cont
+        inc bx 
          
     cont:    
         inc si 
         mov ax, 0
-        cmp cl, 0
-        je exit
-        loop nhapchuoi
+        jmp nhapchuoi
         
     exit:  
         mov ah, 09h
@@ -84,11 +82,11 @@
         cmp ax, 0        
         jne pushdx 
         
-    xuat:
+    popdx:
         pop dx
         mov ah, 02h
         int 21h
-        loop xuat
+        loop popdx
             
     mov ah, 04Ch
     int 21h
