@@ -49,18 +49,14 @@
         mov dh, 0
         sub dl, 30h ; chuyen '0' -> 0
         add ax, dx  ; 
-        jmp pass
-      
+        inc si
+        jmp nhapchuoi 
         
-        
-        pass:
-            inc si
-            jmp nhapchuoi 
-        calc:
-            add sum, ax 
-            mov ax, 0
-            inc si
-            jmp nhapchuoi
+    calc:
+        add sum, ax 
+        mov ax, 0
+        inc si
+        jmp nhapchuoi
     exit:
         add sum, ax  
         mov ah, 09h
@@ -75,16 +71,14 @@
         add dx, 30h ; doi 6 -> '6'
         push dx     ; dua vao ngan xep
         inc cx      ; tang cx
-        cmp ax,0
+        cmp ax, 0
         jne nhap    ; neu ax != 0 thi tiep tuc 
                     ; ngan xep: 3|2|1
     xuat:
         pop dx      ; day 1 -> day 2 -> day 3
         mov ah, 02h
         int 21h
-        loop xuat                       
-   
-    
+        loop xuat   
         
     mov ah, 04Ch
     int 21h
