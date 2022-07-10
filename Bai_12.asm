@@ -1,10 +1,11 @@
 .model small
 .stack 100h
 .data 
-    str db 100 dup(0) 
+    str db 100 dup(0)
     filename db 10,13, 'Nhap ten file: $'
     file dw 100 dup(?),0 
-    content db 10,13, 'Nhap noi dung: $'    
+    content db 10,13, 'Nhap noi dung: $'
+          
     thefile dw ?
     msv db 'Nhap msv: $'
     strMsv db 100 dup('$')
@@ -30,8 +31,8 @@
     
     mov ah, 09h
     lea dx, filename
-    int 21h
-           
+    int 21h 
+    
     mov si, 0
     nhaptenfile:
         mov ah, 01h
@@ -63,29 +64,20 @@
         lea dx, file
         mov cx, 0
         int 21h
+        
         mov cx, si
-        mov thefile, ax
+        mov thefile, ax 
+        
         mov ah, 40h ; ghi file
-        mov bx, thefile
-        ghifile:
-            mov dh, 0
-            mov dl, str[si]
-            ;inc si
-            int 21h
-            loop ghifile
+        mov bx, thefile 
+        lea dx, str
+        int 21h
         
         mov ah, 3eh
         mov bx, thefile
-        int 21h    
-     
+        int 21h  
+        
     mov ah, 4Ch
     int 21h
     
-;3ch: tao file
-;3dh: mo file da co
-;3fh: doc file
-;3eh: dong file
-;40h: ghi file
-;41h: xoa file
-;56h: rename        
     
