@@ -3,8 +3,9 @@
 .data                
     msv db 'Nhap msv: $'
     strMsv db 100 dup('$')
-    ten db 10,13, 'Ten sv: Nguyen Kim Trong - $'
-    tenfile db 'bai15.txt',0
+    ten db 10,13, 'Ten sv: Nguyen Kim Trong - $' 
+    enter db 10,13, '$'
+    tenfile db 'bai13.txt',0
     thefile dw ?
     buffer db 251 dup('$')
     
@@ -22,9 +23,11 @@
     
     mov ah, 09h
     lea dx, ten
-    int 2h1
+    int 21h
     lea dx, strMsv+2
     int 21h 
+    lea dx, enter
+    int 21h
     
     mov ah, 3dh 
     lea dx, tenfile
